@@ -24,15 +24,10 @@ jobs:
   - name: Push Docker image
     run: docker push ${{ secrets.DOCKER_USERNAME }}/vue-app:${{ github.sha }}
   
-   
- deploy : 
-  needs : build
-  runs-on: ubuntu-latest
-  uses: azure/webapps-deploy@v3
   
-  steps : 
-
   - name: Deploy to Azure Web App
-    app-name: TP-final-1
-    publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-    images: ${{ secrets.DOCKER_USERNAME }}/vue-app:${{ github.sha }}
+    uses: azure/webapps-deploy@v2
+    with:
+      app-name: TP-final-1
+      publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+      images: ${{ secrets.DOCKER_USERNAME }}/vue-app:${{ github.sha }}
